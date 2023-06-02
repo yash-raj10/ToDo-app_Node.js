@@ -47,7 +47,28 @@ sendCookie(user, res, "Registered Successfully", 201);
 
 };
 
-export const getUserDetails = async(req, res)=>{};
+export const getMyProfile = (req, res)=>{
+
+    res.status(200).json({
+        success: true,
+        user: req.user,
+    });
+
+};
+
+
+export const logout = (req, res)=>{
+
+    res
+        .status(200)
+        .cookie("token"," ", {expires: new Date(Date.now())})
+        .json({
+            success: true,
+            user: req.user,
+    });
+
+};
+
 
 
 
