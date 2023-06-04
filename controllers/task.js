@@ -31,6 +31,9 @@ export const getMyTask = async (req, res, next )=>{
 export const upadateTask = async (req, res, next )=>{
     const task = await Task.findById(req.params.id);
 
+
+    if(!task) return next(new Error("Nice"));
+
     task.isCompleated = !task.isCompleated;
 
     await task.save();
@@ -43,6 +46,9 @@ export const upadateTask = async (req, res, next )=>{
 
 export const deleatTask = async (req, res, next )=>{
     const task = await Task.findById(req.params.id);
+
+    if(!task) return next(new Error("Nice"));
+
 
     await task.deleteOne();
 

@@ -22,3 +22,10 @@ app.use("/tasks",taskRouter);
 app.get("/", (req, res)=>{
     res.send("nice working");
 });
+
+app.use((err, req, res, next)=>{
+    return res.status(404).json({
+        success: false,
+        message: "Invalid Id",
+      });
+});
