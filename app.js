@@ -3,6 +3,8 @@ import userRouter from "./routes/user.js";
 import {config} from "dotenv";
 import cookieParser from "cookie-parser";
 import taskRouter from "./routes/task.js";
+import { errorMiddleware } from "./middlewares/error.js";
+import cors from "cors";
 
 export const app = express();
 
@@ -13,6 +15,11 @@ config({
 // using middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: [process.env.Frontend_url],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+}))
 
 //using routes
 app.use("/users",userRouter);
@@ -23,9 +30,6 @@ app.get("/", (req, res)=>{
     res.send("nice working");
 });
 
-app.use((err, req, res, next)=>{
-    return res.status(404).json({
-        success: false,
-        message: "Invalid Id",
-      });
-});
+
+//using error middleware
+app.use(errorMiddleware);
